@@ -18,7 +18,7 @@
             background: rgba(0,0,0,0.7);
             border-radius: 20px;
             padding: 30px;
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
@@ -30,23 +30,10 @@
             color: #ffd700;
             margin-bottom: 30px;
         }
-        iframe {
+        audio {
             width: 100%;
-            height: 60px;
-            border: none;
+            margin: 20px 0;
             border-radius: 10px;
-            background: #2c2c3e;
-        }
-        .direct-link {
-            margin-top: 20px;
-            padding: 15px;
-            background: #2c2c3e;
-            border-radius: 10px;
-            word-break: break-all;
-        }
-        .direct-link a {
-            color: #ffd700;
-            text-decoration: none;
         }
         .status {
             margin-top: 20px;
@@ -63,6 +50,19 @@
             cursor: pointer;
             font-size: 16px;
         }
+        button:hover {
+            background: #e84118;
+        }
+        .error {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        .success {
+            color: #4caf50;
+            margin-top: 15px;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
@@ -70,21 +70,36 @@
         <h1>🎧 ETS CEYLON FM</h1>
         <div class="sub">🇱🇰 ලංකාවේ ගේම් රේඩියෝ එක</div>
         
-        <!-- Method 1: Iframe player (RadioJS) -->
-        <iframe src="https://radiojs.com/embed?url=http://176.227.215.27:5539/stream"></iframe>
+        <audio id="radioPlayer" controls autoplay>
+            <source src="/stream" type="audio/mpeg">
+            ඔබගේ බ්‍රවුසරය audio player එක support කරන්නේ නැත.
+        </audio>
         
-        <div style="margin: 15px 0; color: #888;">--------- හෝ ---------</div>
-        
-        <!-- Method 2: Direct Stream Link -->
-        <div class="direct-link">
-            🎵 <strong>කෙලින්ම සවන් දෙන්න:</strong><br>
-            <a href="http://176.227.215.27:5539/stream" target="_blank">http://176.227.215.27:5539/stream</a><br>
-            <small>(Click කළාම browser එකෙන් විවෘත වෙයි)</small>
+        <div>
+            <button onclick="document.getElementById('radioPlayer').play()">▶ Play</button>
+            <button onclick="document.getElementById('radioPlayer').pause()">⏸ Pause</button>
+            <button onclick="location.reload()">🔄 Reload</button>
         </div>
         
         <div class="status">
-            📻 ETS Ceylon FM | 🔴 24/7 ඔන්ලයින්
+            📻 ETS Ceylon FM | 🔴 ඔන්ලයින්
         </div>
+        <div id="playerStatus" class="error"></div>
     </div>
+
+    <script>
+        const audio = document.getElementById('radioPlayer');
+        const statusDiv = document.getElementById('playerStatus');
+        
+        audio.onplaying = function() {
+            statusDiv.innerHTML = '✅ රේඩියෝව දැන් වැඩ කරනවා! ස්තුතියි!';
+            statusDiv.className = 'success';
+        };
+        
+        audio.onerror = function() {
+            statusDiv.innerHTML = '❌ සම්බන්ධ වෙන්න බැරි වුණා.<br>📱 මෙම link එක browser එකේ දාලා බලන්න: <a href="http://176.227.215.27:5539/stream" target="_blank" style="color:#ffd700;">Click Here</a>';
+            statusDiv.className = 'error';
+        };
+    </script>
 </body>
 </html>
