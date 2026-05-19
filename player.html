@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
             text-align: center;
@@ -20,9 +20,17 @@
             padding: 30px;
             max-width: 500px;
             margin: 0 auto;
+            backdrop-filter: blur(5px);
         }
-        h1 { margin-bottom: 10px; }
-        .sub { color: #ffd700; margin-bottom: 30px; }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .sub {
+            color: #ffd700;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
         .stream-link {
             display: inline-block;
             background: #ff4757;
@@ -31,11 +39,33 @@
             border-radius: 50px;
             text-decoration: none;
             font-size: 18px;
+            font-weight: bold;
             margin: 20px 0;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .stream-link:hover { background: #e84118; }
-        .note { margin-top: 20px; font-size: 14px; color: #aaa; }
-        audio { width: 100%; margin-top: 20px; border-radius: 10px; }
+        .stream-link:hover {
+            background: #e84118;
+            transform: scale(1.02);
+        }
+        .note {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+            background: #2c2c3e;
+        }
+        .status {
+            font-size: 13px;
+            margin-top: 15px;
+            color: #4caf50;
+        }
     </style>
 </head>
 <body>
@@ -43,22 +73,50 @@
         <h1>🎧 ETS CEYLON FM</h1>
         <div class="sub">🇱🇰 ලංකාවේ ගේම් රේඩියෝ එක</div>
         
+        <!-- Direct Stream Link Button (always works) -->
         <a href="http://176.227.215.27:5539/stream" class="stream-link" target="_blank">
             🔴 LIVE අහන්න මෙතන ක්ලික් කරන්න
         </a>
         
         <div class="note">
-            ⚠️ කෙලින්ම අහන්න උඩ බටනය ක්ලික් කරන්න.<br>
-            නැත්නම් පහත player එක try කරන්න (සමහර browser වල වැඩ නොකරයි):
+            🎵 <strong>Proxy Player (Worker)</strong> - පහත player එක සාමාන්‍යයෙන් වැඩ කරයි.<br>
+            ⚠️ යම් හේතුවකින් වැඩ නොකරන්නේ නම්, ඉහත රතු බටනය භාවිතා කරන්න.
         </div>
         
-        <audio controls>
-            <source src="http://176.227.215.27:5539/stream" type="audio/mpeg">
+        <!-- Audio Player using Cloudflare Worker Proxy -->
+        <audio id="radioPlayer" controls autoplay>
+            <source src="https://ets-proxy.slherotech3.workers.dev" type="audio/mpeg">
+            ඔබගේ බ්‍රවුසරය audio element එක සපයන්නේ නැත.
         </audio>
         
+        <div id="playerStatus" class="status">
+            📻 ප්‍රවාහය ආරම්භ වේදිකාවේ...
+        </div>
+        
         <div class="note">
-            📻 24/7 ඔන්ලයින් | ETS Ceylon FM
+            💡 ඉඟිය: Player එක වැඩ නොකරන්නේ නම්, පිටුව Refresh කරන්න (F5).<br>
+            📡 ස්ට්‍රීම් සර්වර් එක 24/7 ක්‍රියාත්මකයි.
         </div>
     </div>
+
+    <script>
+        const audio = document.getElementById('radioPlayer');
+        const statusDiv = document.getElementById('playerStatus');
+        
+        audio.onplaying = function() {
+            statusDiv.innerHTML = '✅ රේඩියෝව සාර්ථකව වාදනය වෙමින් පවතී! ස්තුතියි!';
+            statusDiv.style.color = '#4caf50';
+        };
+        
+        audio.onerror = function(e) {
+            statusDiv.innerHTML = '❌ Proxy player එකට සම්බන්ධ වීමට නොහැකි විය.<br>කරුණාකර ඉහත රතු බටනය භාවිතා කරන්න.';
+            statusDiv.style.color = '#ff6b6b';
+        };
+        
+        audio.onwaiting = function() {
+            statusDiv.innerHTML = '⏳ ස්ට්‍රීම් එක සූදානම් කරමින්... කරුණාකර රැඳී සිටින්න.';
+            statusDiv.style.color = '#ffd700';
+        };
+    </script>
 </body>
 </html>
