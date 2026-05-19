@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
             text-align: center;
@@ -14,92 +14,51 @@
             margin: 0;
             min-height: 100vh;
         }
-        .player-box {
+        .box {
             background: rgba(0,0,0,0.7);
             border-radius: 20px;
             padding: 30px;
             max-width: 500px;
             margin: 0 auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .sub {
-            color: #ffd700;
-            margin-bottom: 30px;
-        }
-        audio {
-            width: 100%;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
-        .status {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #aaa;
-        }
-        button {
+        h1 { margin-bottom: 10px; }
+        .sub { color: #ffd700; margin-bottom: 30px; }
+        .stream-link {
+            display: inline-block;
             background: #ff4757;
-            border: none;
             color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 16px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 20px 0;
         }
-        button:hover {
-            background: #e84118;
-        }
-        .error {
-            color: #ff6b6b;
-            margin-top: 15px;
-            font-size: 13px;
-        }
-        .success {
-            color: #4caf50;
-            margin-top: 15px;
-            font-size: 13px;
-        }
+        .stream-link:hover { background: #e84118; }
+        .note { margin-top: 20px; font-size: 14px; color: #aaa; }
+        audio { width: 100%; margin-top: 20px; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div class="player-box">
+    <div class="box">
         <h1>🎧 ETS CEYLON FM</h1>
         <div class="sub">🇱🇰 ලංකාවේ ගේම් රේඩියෝ එක</div>
         
-        <audio id="radioPlayer" controls autoplay>
-            <source src="/stream" type="audio/mpeg">
-            ඔබගේ බ්‍රවුසරය audio player එක support කරන්නේ නැත.
+        <a href="http://176.227.215.27:5539/stream" class="stream-link" target="_blank">
+            🔴 LIVE අහන්න මෙතන ක්ලික් කරන්න
+        </a>
+        
+        <div class="note">
+            ⚠️ කෙලින්ම අහන්න උඩ බටනය ක්ලික් කරන්න.<br>
+            නැත්නම් පහත player එක try කරන්න (සමහර browser වල වැඩ නොකරයි):
+        </div>
+        
+        <audio controls>
+            <source src="http://176.227.215.27:5539/stream" type="audio/mpeg">
         </audio>
         
-        <div>
-            <button onclick="document.getElementById('radioPlayer').play()">▶ Play</button>
-            <button onclick="document.getElementById('radioPlayer').pause()">⏸ Pause</button>
-            <button onclick="location.reload()">🔄 Reload</button>
+        <div class="note">
+            📻 24/7 ඔන්ලයින් | ETS Ceylon FM
         </div>
-        
-        <div class="status">
-            📻 ETS Ceylon FM | 🔴 ඔන්ලයින්
-        </div>
-        <div id="playerStatus" class="error"></div>
     </div>
-
-    <script>
-        const audio = document.getElementById('radioPlayer');
-        const statusDiv = document.getElementById('playerStatus');
-        
-        audio.onplaying = function() {
-            statusDiv.innerHTML = '✅ රේඩියෝව දැන් වැඩ කරනවා! ස්තුතියි!';
-            statusDiv.className = 'success';
-        };
-        
-        audio.onerror = function() {
-            statusDiv.innerHTML = '❌ සම්බන්ධ වෙන්න බැරි වුණා.<br>📱 මෙම link එක browser එකේ දාලා බලන්න: <a href="http://176.227.215.27:5539/stream" target="_blank" style="color:#ffd700;">Click Here</a>';
-            statusDiv.className = 'error';
-        };
-    </script>
 </body>
 </html>
