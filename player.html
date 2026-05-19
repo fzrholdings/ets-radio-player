@@ -53,6 +53,11 @@
         button:hover {
             background: #e84118;
         }
+        .error {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
@@ -60,19 +65,32 @@
         <h1>🎧 ETS CEYLON FM</h1>
         <div class="sub">🇱🇰 ලංකාවේ ගේම් රේඩියෝ එක</div>
         
-        <audio id="radioPlayer" controls autoplay>
-            <source src="http://176.227.215.27:5539/stream" type="audio/mpeg">
-            ඔබගේ බ්‍රවුසරය audio player එක support කරන්නේ නැත.
+        <audio id="radioPlayer" controls>
+            <source src="https://cors-anywhere.herokuapp.com/http://176.227.215.27:5539/stream" type="audio/mpeg">
         </audio>
         
         <div>
             <button onclick="document.getElementById('radioPlayer').play()">▶ Play</button>
             <button onclick="document.getElementById('radioPlayer').pause()">⏸ Pause</button>
+            <button onclick="document.getElementById('radioPlayer').load()">🔄 Reload</button>
         </div>
         
         <div class="status">
-            📻 දැන් ඔන්ලයින් | 🔴 Stream: http://176.227.215.27:5539/stream
+            📻 ETS Ceylon FM | 🔴 ඔන්ලයින්
         </div>
+        <div class="error" id="errorMsg"></div>
     </div>
+
+    <script>
+        const audio = document.getElementById('radioPlayer');
+        
+        audio.onerror = function() {
+            document.getElementById('errorMsg').innerHTML = '❌ Stream එක connect වෙන්නේ නැහැ. <br> කරුණාකර පරීක්ෂා කරන්න: <br> 1. Stream link එක browser එකෙන් වැඩද? <br> 2. Reload බටනය ඔබන්න';
+        };
+        
+        audio.onplaying = function() {
+            document.getElementById('errorMsg').innerHTML = '✅ හරි! දැන් ගුවන් විදුලිය වැඩ කරනවා';
+        };
+    </script>
 </body>
 </html>
