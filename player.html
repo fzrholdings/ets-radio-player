@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ETS Ceylon FM - ගේම් රේඩියෝ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .player-box {
+            background: rgba(0,0,0,0.7);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .sub {
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+        audio {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        button {
+            background: #ff4757;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #e84118;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-box">
+        <h1>🎧 ETS CEYLON FM</h1>
+        <div class="sub">🇱🇰 ලංකාවේ ගේම් රේඩියෝ එක</div>
+        
+        <audio id="radioPlayer" controls autoplay>
+            <source src="http://176.227.215.27:5539/stream" type="audio/mpeg">
+            ඔබගේ බ්‍රවුසරය audio player එක support කරන්නේ නැත.
+        </audio>
+        
+        <div>
+            <button onclick="document.getElementById('radioPlayer').play()">▶ Play</button>
+            <button onclick="document.getElementById('radioPlayer').pause()">⏸ Pause</button>
+        </div>
+        
+        <div class="status">
+            📻 දැන් ඔන්ලයින් | 🔴 Stream: http://176.227.215.27:5539/stream
+        </div>
+    </div>
+</body>
+</html>
